@@ -1,0 +1,81 @@
+{
+  "id": 941424058871808,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "targets": [
+        {
+          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"default\",pod=~\"lab7-.*\",container=\"app\"}[2m]))",
+          "legendFormat": "CPU приложения",
+          "refId": "A"
+        }
+      ],
+      "title": "Нагрузка CPU приложения (ядра)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "min": 0,
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 10
+      },
+      "id": 2,
+      "targets": [
+        {
+          "expr": "kube_deployment_status_replicas_available{namespace=\"default\",deployment=\"lab7\"}",
+          "legendFormat": "Готовые поды",
+          "refId": "A"
+        },
+        {
+          "expr": "kube_horizontalpodautoscaler_spec_max_replicas{namespace=\"default\",horizontalpodautoscaler=\"lab7\"}",
+          "legendFormat": "Предел HPA",
+          "refId": "B"
+        }
+      ],
+      "title": "Число готовых подов",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 39,
+  "tags": [
+    "lab7"
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "title": "Лабораторная 7 — нагрузка и масштабирование",
+  "uid": "lab7-demo-cpu",
+  "version": 1
+}
